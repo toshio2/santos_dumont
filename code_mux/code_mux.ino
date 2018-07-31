@@ -4,6 +4,9 @@ int a = 7;
 int button = 8;
 
 int state = LOW;
+int a_state = LOW;
+int b_state = LOW;
+int option = 0;
 int reading;
 int previous = LOW;
 
@@ -20,16 +23,20 @@ void setup() {
 
 
 void loop() {
-  state = digitalRead(button);
-  if (state == HIGH){
-    digitalWrite(en, LOW);
-    digitalWrite(b, LOW);
-    digitalWrite(a, HIGH);
-  }
-  else {
-    digitalWrite(en, HIGH);
-    digitalWrite(b, LOW);
-    digitalWrite(a, HIGH);
-  }
+  reading = digitalRead(button);
 
+  if (reading == HIGH && previous == LOW && millis() - time > debounce){
+    if (state == HIGH) {
+      state = LOW;
+    }
+    else {
+      state = HIGH;
+    }
+
+    time = millis();
+  }
+  digitalWrite(en, state);
+  digitalWrite(b, LOW);
+  digitalWrite(a, HIGH);
+  previous = reading;
 }
