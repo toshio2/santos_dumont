@@ -4,6 +4,9 @@ int a = 7;
 int button = 8;
 
 int state = LOW;
+int a_state = LOW;
+int b_state = LOW;
+int option = 0;
 int reading;
 int previous = LOW;
 
@@ -12,6 +15,7 @@ long debounce = 200;
 
 
 void setup() {
+  Serial.begin(9600);
   pinMode(en, OUTPUT);
   pinMode(b, OUTPUT);
   pinMode(a, OUTPUT);
@@ -20,16 +24,23 @@ void setup() {
 
 
 void loop() {
-  state = digitalRead(button);
-  if (state == HIGH){
-    digitalWrite(en, LOW);
-    digitalWrite(b, LOW);
-    digitalWrite(a, HIGH);
-  }
-  else {
-    digitalWrite(en, HIGH);
-    digitalWrite(b, LOW);
-    digitalWrite(a, HIGH);
-  }
+  reading = digitalRead(button);
+  int sensorValue = analogRead(A0);
+  Serial.println(sensorValue);
+  delay(1);
 
+  if (reading == HIGH && previous == LOW && millis() - time > debounce){
+    if (state == HIGH) {
+      state = LOW;
+    }
+    else {
+      state = HIGH;
+    }
+
+    time = millis();
+  }
+  digitalWrite(en, state);
+  digitalWrite(b, LOW);
+  digitalWrite(a, HIGH);
+  previous = reading;
 }
