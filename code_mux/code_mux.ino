@@ -15,6 +15,7 @@ long debounce = 200;
 
 
 void setup() {
+  Serial.begin(9600);
   pinMode(en, OUTPUT);
   pinMode(b, OUTPUT);
   pinMode(a, OUTPUT);
@@ -24,6 +25,9 @@ void setup() {
 
 void loop() {
   reading = digitalRead(button);
+  int sensorValue = analogRead(A0);
+  Serial.println(sensorValue);
+  delay(1);
 
   if (reading == HIGH && previous == LOW && millis() - time > debounce){
     if (state == HIGH) {
