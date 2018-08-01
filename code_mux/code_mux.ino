@@ -2,6 +2,7 @@ int en = 2;
 int b = 4;
 int a = 7;
 int button = 8;
+int pwmOut = 10;
 
 int state = LOW;
 int a_state = LOW;
@@ -26,7 +27,10 @@ void setup() {
 void loop() {
   reading = digitalRead(button);
   int sensorValue = analogRead(A0);
+  //sensorValue = map(sensorValue, 0, 1023, 0, 255);
+  analogWrite(pwmOut,sensorValue);
   Serial.println(sensorValue);
+  
   delay(1);
 
   if (reading == HIGH && previous == LOW && millis() - time > debounce){
