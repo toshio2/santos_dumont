@@ -33,6 +33,15 @@ void loop() {
   if (Serial.available() > 0) {
     int inByte = Serial.read();
     switch(inByte){
+      case 'e':
+        digitalWrite(en, LOW);
+        break;
+      case 'd':
+        digitalWrite(en, HIGH);
+        break;
+      case '0':
+        digitalWrite(b, LOW);
+        digitalWrite(a, LOW);
       case '1':
         digitalWrite(b, LOW);
         digitalWrite(a, HIGH);
@@ -46,6 +55,7 @@ void loop() {
         digitalWrite(a, HIGH);
         break;
       default:
+        digitalWrite(en, HIGH);
         digitalWrite(b, LOW);
         digitalWrite(a, LOW);
         break;
@@ -54,6 +64,7 @@ void loop() {
   
   delay(1);
 
+  /*
   if (reading == HIGH && previous == LOW && millis() - time > debounce){
     if (state == HIGH) {
       state = LOW;
@@ -64,6 +75,7 @@ void loop() {
 
     time = millis();
   }
+  */
   digitalWrite(en, state);
   previous = reading;
 }
