@@ -21,17 +21,22 @@ void setup() {
   pinMode(b, OUTPUT);
   pinMode(a, OUTPUT);
   pinMode(button, INPUT);
+  while(!Serial){
+  }
+  Serial.println("\n\nDrone Controller");
+  Serial.println();
 }
 
 
 void loop() {
-  reading = digitalRead(button);
-  int sensorValue = analogRead(A0);
-  sensorValue = map(sensorValue, 0, 1023, 0, 255);
-  analogWrite(pwmOut,sensorValue);
-  Serial.println(sensorValue);
-  if (Serial.available() > 0) {
+  //reading = digitalRead(button);
+  //int sensorValue = analogRead(A0);
+  //sensorValue = map(sensorValue, 0, 1023, 0, 255);
+  //analogWrite(pwmOut,sensorValue);
+  //Serial.println(sensorValue);
+  if (Serial.available()) {
     int inByte = Serial.read();
+    Serial.println(inByte);
     switch(inByte){
       case 'e':
         digitalWrite(en, LOW);
@@ -61,8 +66,7 @@ void loop() {
         digitalWrite(a, LOW);
         break;
     }
-  }
-  
+}
   delay(1);
 
   /*
