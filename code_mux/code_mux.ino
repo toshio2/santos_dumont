@@ -42,6 +42,7 @@ void loop() {
       case '0':
         digitalWrite(b, LOW);
         digitalWrite(a, LOW);
+        break;
       case '1':
         digitalWrite(b, LOW);
         digitalWrite(a, HIGH);
@@ -76,6 +77,6 @@ void loop() {
     time = millis();
   }
   */
-  digitalWrite(en, state);
+  //digitalWrite(en, state);
   previous = reading;
 }
