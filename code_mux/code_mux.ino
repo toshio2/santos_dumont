@@ -27,9 +27,30 @@ void setup() {
 void loop() {
   reading = digitalRead(button);
   int sensorValue = analogRead(A0);
-  //sensorValue = map(sensorValue, 0, 1023, 0, 255);
+  sensorValue = map(sensorValue, 0, 1023, 0, 255);
   analogWrite(pwmOut,sensorValue);
   Serial.println(sensorValue);
+  if (Serial.available() > 0) {
+    int inByte = Serial.read();
+    switch(inByte){
+      case '1':
+        digitalWrite(b, LOW);
+        digitalWrite(a, HIGH);
+        break;
+      case '2':
+        digitalWrite(b, HIGH);
+        digitalWrite(a, LOW);
+        break;
+      case '3':
+        digitalWrite(b, HIGH);
+        digitalWrite(a, HIGH);
+        break;
+      default:
+        digitalWrite(b, LOW);
+        digitalWrite(a, LOW);
+        break;
+    }
+  }
   
   delay(1);
 
@@ -44,7 +65,5 @@ void loop() {
     time = millis();
   }
   digitalWrite(en, state);
-  digitalWrite(b, LOW);
-  digitalWrite(a, HIGH);
   previous = reading;
 }
