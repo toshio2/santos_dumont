@@ -1,10 +1,14 @@
 //const int Throttle = 67;
 const int Throttle = 10;
+int buttonState = 0;
+
 String menuMsg = ("| Drone RC Interface | ");
 String InString = "";
 
 void setup() {
   //pinMode(throttle_voltage, OUTPUT);
+  pinMode(2, OUTPUT);
+  pinMode(4, INPUT);
   //analogWriteResolution(12);
   Serial.begin(9600);
 
@@ -38,7 +42,12 @@ void loop() {
     Serial.print("Throttle Voltage = ");
     Serial.println(InVoltage);
   }
-  
+  buttonState = digitalRead(4);
+  if (buttonState == HIGH){
+    digitalWrite(2, HIGH);
+  } else {
+    digitalWrite(2, LOW);
+  }
 }
 
 void Menu(){
@@ -67,4 +76,3 @@ void DashedLine(int len){
   }
   Serial.println();
 }
-
