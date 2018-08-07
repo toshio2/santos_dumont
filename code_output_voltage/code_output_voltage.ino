@@ -8,7 +8,7 @@ String InString = "";
 void setup() {
   //pinMode(throttle_voltage, OUTPUT);
   pinMode(2, OUTPUT);
-  pinMode(4, INPUT);
+  //pinMode(4, INPUT);
   //analogWriteResolution(12);
   Serial.begin(9600);
 
@@ -31,23 +31,30 @@ void loop() {
     InString = Serial.readString();
     int InVoltage = InString.toInt();
     
-    if (InVoltage > 176){
-      InVoltage = 176;
+    if (InVoltage > 171){
+      InVoltage = 171;
     }
     
     //InVoltage = map(InVoltage, 0, 3.3, 0, 255);
     analogWrite(Throttle, InVoltage);
+    delay(500);
+    digitalWrite(2, HIGH);
+    delay(100);
+    digitalWrite(2, LOW);
+    delay(50);
     Serial.print("String: ");
     Serial.println(InString);
     Serial.print("Throttle Voltage = ");
     Serial.println(InVoltage);
   }
+  /*
   buttonState = digitalRead(4);
   if (buttonState == HIGH){
     digitalWrite(2, HIGH);
   } else {
     digitalWrite(2, LOW);
   }
+  */
 }
 
 void Menu(){
