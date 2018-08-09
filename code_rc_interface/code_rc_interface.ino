@@ -1,5 +1,5 @@
 //const int Throttle = 67;
-const int Throttle = 10;
+const int Throttle = 3;
 int buttonState = 0;
 
 String menuMsg = ("| Drone RC Interface | ");
@@ -9,7 +9,6 @@ void setup() {
   //pinMode(throttle_voltage, OUTPUT);
   pinMode(2, OUTPUT);
   //pinMode(4, INPUT);
-  pinMode(7, OUTPUT);
   //analogWriteResolution(12);
   Serial.begin(9600);
 
@@ -38,12 +37,11 @@ void loop() {
     
     //InVoltage = map(InVoltage, 0, 3.3, 0, 255);
     analogWrite(Throttle, InVoltage);
-    delay(400);
-    digitalWrite(7, HIGH);
+    delay(500);
     digitalWrite(2, HIGH);
-    delay(20);
+    delay(100);
     digitalWrite(2, LOW);
-    delay(10);
+    delay(50);
     Serial.print("String: ");
     Serial.println(InString);
     Serial.print("Throttle Voltage = ");
@@ -57,7 +55,6 @@ void loop() {
     digitalWrite(2, LOW);
   }
   */
-  digitalWrite(7, LOW);
 }
 
 void Menu(){
