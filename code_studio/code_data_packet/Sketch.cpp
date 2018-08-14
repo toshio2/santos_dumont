@@ -10,14 +10,21 @@ const uint8_t yawPin = 6;
 const uint8_t pitchPin = 10;
 const uint8_t rollPin = 11;
 
-
+// Digital ports
+const uint8_t shThrottle = 3;
+const uint8_t shYaw = 4;
+const uint8_t shPitch = 8;
+const uint8_t shRoll = 9;
 
 String readString;
 
 void setup() {
   Serial.begin(9600);
   Serial.println("Simple serial echo test"); // so I can keep track of what is loaded
-  pinMode(2, OUTPUT);
+  pinMode(shThrottle, OUTPUT);
+  pinMode(shYaw, OUTPUT);
+  pinMode(shPitch, OUTPUT);
+  pinMode(shRoll, OUTPUT);
 }
 
 void loop() {
@@ -33,14 +40,44 @@ void loop() {
     Serial.println(readString);  //so you can see the captured String
 
     int throttleValue = readString.substring(0,3).toInt();
-    int yawValue = readString.substring(4,7).toInt();
+	if ((throttleValue > 171) || (throttleValue < 0))
+	{
+		throttleValue = 171;
+	}
+
+	int yawValue = readString.substring(4,7).toInt();
+	if ((yawValue > 171) || (yawValue < 0))
+	{
+		yawValue = 171;
+	}
+
     int pitchValue = readString.substring(8,11).toInt();
-    int rollValue = readString.substring(12).toInt();
+	if ((pitchValue > 171) || (pitchValue < 0))
+	{
+		yawValue = 171;
+	}
+
+	int rollValue = readString.substring(12).toInt();
+	if ((rollValue > 171) || (rollValue < 0))
+	{
+		rollValue = 171;
+	}
 
     analogWrite(throttlePin, throttleValue);
 	analogWrite(yawPin, yawValue);
     analogWrite(pitchPin, pitchValue);
     analogWrite(rollPin, rollValue);
+
+	digitalWrite(shThrottle, HIGH);
+	digitalWrite(shYaw, HIGH);
+	digitalWrite(shPitch, HIGH);
+	digitalWrite(shRoll, HIGH);
+	_delay_ms(2);
+	digitalWrite(shThrottle, LOW);
+	digitalWrite(shYaw, LOW);
+	digitalWrite(shPitch, LOW);
+	digitalWrite(shRoll, LOW);
+
 
 
 	//Serial.println(throttleValue);
